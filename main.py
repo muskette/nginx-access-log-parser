@@ -15,6 +15,7 @@ import csv
 parser = argparse.ArgumentParser()
 parser.add_argument("log", help="the log file or directory you wish to parse")
 parser.add_argument("-t", help="only print out the top t amount of results", type=int)
+parser.add_argument("-c", help="Use this flag to output the parse to a csv file", action="store_true")
 args = parser.parse_args()
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -104,9 +105,6 @@ def output(logs):
         dict_writer = csv.DictWriter(f, keys)
         dict_writer.writer.writerow(keys)
         dict_writer.writerows(logs)
-    #string = str(logs)
-    #string=string.translate(None, '[]')
-    #print(string)
     
 if __name__ == '__main__':
     inputfile =''
@@ -125,6 +123,9 @@ if __name__ == '__main__':
     else:    
         #sample output
         log_file = open('example.log', 'r')
-        
-    #pp.pprint(process_log(log_file))
-    output(process_log(log_file))
+
+    if args.c!=0:    
+        output(process_log(log_file))
+    else:
+        pp.pprint(process_log(log_file))
+    

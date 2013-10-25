@@ -10,6 +10,7 @@ import pprint
 import os,glob
 import argparse
 from collections import OrderedDict
+import csv
 
 parser = argparse.ArgumentParser()
 parser.add_argument("log", help="the log file or directory you wish to parse")
@@ -98,9 +99,14 @@ def item_occur(lines):
     return d
 
 def output(logs):
-    string = str(logs)
-    string=string.translate(None, '[]')
-    print(string)
+    keys = ['ip', 'hostname', 'count']
+    with open('Nginx_log_parser_output.csv', 'wb') as f:
+        dict_writer = csv.DictWriter(f, keys)
+        dict_writer.writer.writerow(keys)
+        dict_writer.writerows(logs)
+    #string = str(logs)
+    #string=string.translate(None, '[]')
+    #print(string)
     
 if __name__ == '__main__':
     inputfile =''
